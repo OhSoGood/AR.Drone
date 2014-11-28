@@ -38,7 +38,7 @@ namespace AR.Drone.WinApp
         private PacketRecorder _packetRecorderWorker;
         private FileStream _recorderStream;
         private Autopilot _autopilot;
-
+        private lslControl lslControl;
         public MainForm()
         {
             InitializeComponent();
@@ -57,6 +57,10 @@ namespace AR.Drone.WinApp
             _playerForms = new List<PlayerForm>();
 
             _videoPacketDecoderWorker.UnhandledException += UnhandledException;
+
+            lslControl = new lslControl();
+            lslControl.Show();
+
         }
 
         private void UnhandledException(object sender, Exception exception)
