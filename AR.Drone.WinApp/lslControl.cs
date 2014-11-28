@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using LSL;
+using AR.Drone.Client.Command;
 
 namespace AR.Drone.WinApp
 {
     public partial class lslControl : Form
     {
         public liblsl.StreamInlet inlet;
-        float[] sample = new float[8];
+        float[] sample = new float[1];
+        private Drone.Client.DroneClient client;
 
-        public lslControl()
+        public lslControl(Drone.Client.DroneClient client)
         {
             InitializeComponent();
             // wait until an EEG stream shows up
@@ -25,6 +27,7 @@ namespace AR.Drone.WinApp
             this.inlet = new liblsl.StreamInlet(results[0]);
             System.Console.Write(inlet.info().as_xml());
 
+            this.client = client;
             
         }
 
@@ -45,6 +48,8 @@ namespace AR.Drone.WinApp
             // read samples
             this.inlet.pull_sample(this.sample);
             System.Console.WriteLine(this.sample);
+
+            client.Progress(FlightMode.Progressive, pitch: (sample.First()-1)/10);
         }
     }
 }

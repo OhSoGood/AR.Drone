@@ -58,7 +58,7 @@ namespace AR.Drone.WinApp
 
             _videoPacketDecoderWorker.UnhandledException += UnhandledException;
 
-            lslControl = new lslControl();
+            lslControl = new lslControl(_droneClient);
             lslControl.Show();
 
         }
