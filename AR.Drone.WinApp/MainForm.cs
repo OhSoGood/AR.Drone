@@ -216,6 +216,7 @@ namespace AR.Drone.WinApp
         private void button3_Click(object sender, EventArgs e)
         {
             _droneClient.Land();
+            this.lslControl.stop.PerformClick();
         }
 
         private void btnEmergency_Click(object sender, EventArgs e)

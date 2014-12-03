@@ -24,18 +24,25 @@ namespace AR.Drone.WinApp
         {
             InitializeComponent();
             // wait until an EEG stream shows up
-            this.results = liblsl.resolve_stream("type", "EEG");
+
+            this.updateStreamList();
+            this.client = client;
+            
+        }
+
+        private void updateStreamList()
+        {
+            this.results = liblsl.resolve_streams(1);
+            listStream.DataSource = null;
+            this.listItems.Clear();
+
             for (int i = 0; i < this.results.Count(); i++)
             {
-                listItems.Add(this.results[i].name() + " (from " + this.results[i].hostname() + ")");
+                listItems.Add(this.results[i].name() + " (from " + this.results[i].hostname() + ")" + " type: " + this.results[i].type());
             }
 
             listStream.DataSource = listItems;
-
-
-
-            this.client = client;
-            
+            listStream.Refresh();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,6 +61,7 @@ namespace AR.Drone.WinApp
 
             flymode.Enabled = false;
             scaleFactor.Enabled = false;
+            start.Enabled = false;
             stop.Enabled = true;
             connect.Enabled = false;
             this.lslTimer.Start();
@@ -63,6 +71,7 @@ namespace AR.Drone.WinApp
         private void button2_Click(object sender, EventArgs e)
         {
             Console.WriteLine("stop");
+            this.client.Hover();
             this.lslTimer.Stop();
             connect.Enabled = true;
             start.Enabled = false;
@@ -76,13 +85,21 @@ namespace AR.Drone.WinApp
             // read samples
             this.inlet.pull_sample(this.sample);
             System.Console.WriteLine(this.sample[0]);
+            
+            this.textBox1.Text = this.sample[0].ToString();
+
+            float currentPitch = sample.First() / this.factor;
+            
+            this.textBox2.Text = currentPitch.ToString();
+
             if (flymode.SelectedIndex == 0)
             {
-                client.Progress(FlightMode.Progressive, pitch: (sample.First() - 1) / this.factor);
+                client.Progress(FlightMode.Progressive, pitch:currentPitch) ;
+                
             }
             else if (flymode.SelectedIndex == 1)
             {
-                client.Progress(FlightMode.AbsoluteControl, pitch: (sample.First() - 1) / this.factor);
+                client.Progress(FlightMode.AbsoluteControl, pitch: currentPitch);
             }
         }
 
@@ -108,6 +125,16 @@ namespace AR.Drone.WinApp
         private void flymode_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void StreamLookUp_Click(object sender, EventArgs e)
+        {
+            this.updateStreamList();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            client.Progress(FlightMode.Progressive, pitch: ((float) trackBar1.Value / float.Parse(this.scaleFactor.Text)));
         }
     }
 }
