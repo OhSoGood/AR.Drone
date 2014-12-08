@@ -45,7 +45,8 @@ namespace AR.Drone.WinApp
 
             listStream.DataSource = listItems;
             listStream.Refresh();
-            this.listStream.SelectedIndex = 0;
+            if(listItems != null && listItems.Count > 0)
+                this.listStream.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
