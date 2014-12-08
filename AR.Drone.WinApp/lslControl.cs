@@ -20,6 +20,8 @@ namespace AR.Drone.WinApp
         private liblsl.StreamInfo[] results;
         private float factor = 10;
 
+        public event Action<double> PitchValueAvailable;
+
         public lslControl(Drone.Client.DroneClient client)
         {
             InitializeComponent();
@@ -43,6 +45,7 @@ namespace AR.Drone.WinApp
 
             listStream.DataSource = listItems;
             listStream.Refresh();
+            this.listStream.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -135,6 +138,10 @@ namespace AR.Drone.WinApp
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             client.Progress(FlightMode.Progressive, pitch: ((float) trackBar1.Value / float.Parse(this.scaleFactor.Text)));
+
+            //if (PitchValueAvailable != null) {
+            //    PitchValueAvailable(((float)trackBar1.Value / float.Parse(this.scaleFactor.Text)));
+            //}
         }
     }
 }
