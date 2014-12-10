@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProductVersion>12.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
+    <NuGetPackageImportStamp>b6dfb708</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,6 +58,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.Direct3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2902.0\Microsoft.DirectX.DirectInput.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -65,6 +78,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigValues.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigValues.Designer.cs">
+      <DependentUpon>ConfigValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ContinousControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContinousControl.Designer.cs">
+      <DependentUpon>ContinousControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DemoPilot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoPilot.Designer.cs">
+      <DependentUpon>DemoPilot.cs</DependentUpon>
+    </Compile>
     <Compile Include="FilePlayer.cs" />
     <Compile Include="LSL.cs" />
     <Compile Include="lslControl.cs">
@@ -72,6 +103,12 @@
     </Compile>
     <Compile Include="lslControl.Designer.cs">
       <DependentUpon>lslControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PIDForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PIDForm.Designer.cs">
+      <DependentUpon>PIDForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlayerForm.cs">
       <SubType>Form</SubType>
@@ -89,12 +126,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConfigValues.resx">
+      <DependentUpon>ConfigValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContinousControl.resx">
+      <DependentUpon>ContinousControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DemoPilot.resx">
+      <DependentUpon>DemoPilot.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="lslControl.resx">
       <DependentUpon>lslControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PIDForm.resx">
+      <DependentUpon>PIDForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
@@ -129,6 +178,10 @@
       <Project>{A536B02A-B0B1-4753-8328-17369EF09976}</Project>
       <Name>FFmpeg.AutoGen</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIDLibrary\PIDLibrary.csproj">
+      <Project>{47ff7121-d8b6-4e27-9f9e-402166b67305}</Project>
+      <Name>PIDLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="liblsl\liblsl32.dll">
@@ -138,7 +191,23 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\SharpDX.2.6.3\build\SharpDX.targets" Condition="Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SharpDX.2.6.3\build\SharpDX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.2.6.3\build\SharpDX.targets'))" />
+    <Error Condition="!Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets'))" />
+  </Target>
+  <Import Project="..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets" Condition="Exists('..\packages\SharpDX.Toolkit.2.6.3\build\SharpDX.Toolkit.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -38,7 +38,20 @@ namespace AR.Drone.WinApp
         private PacketRecorder _packetRecorderWorker;
         private FileStream _recorderStream;
         private Autopilot _autopilot;
+
+        private ConfigValues configValueForm;
+
+        private DemoPilot demoPilotForm;
         private lslControl lslControl;
+        private PIDForm pidControl;
+        private ContinousControl continousControl;
+
+        private LSL.liblsl.StreamOutlet lslOut_Velocity;
+        private LSL.liblsl.StreamOutlet lslOut_Altitude;
+        private LSL.liblsl.StreamOutlet lslOut_Magneto;
+        private LSL.liblsl.StreamOutlet lslOut_Rotation;
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -59,9 +72,80 @@ namespace AR.Drone.WinApp
             _videoPacketDecoderWorker.UnhandledException += UnhandledException;
 
             lslControl = new lslControl(_droneClient);
-            lslControl.Show();
+            
+            pidControl = new PIDForm();
+            pidControl.Client = _droneClient;
+            
+            _droneClient.NavigationDataAcquired += this.pidControl.UpdateNavDataFromDrone;
+            _droneClient.NavigationDataAcquired += _droneClient_NavigationDataAcquired;
+
+            continousControl = new ContinousControl();
+            continousControl.Client = _droneClient;
+            pidControl.YawUpdateAvailable += continousControl.UpdateYaw;
+            lslControl.LSLValueAvailable += continousControl.UpdatePitch;
+
+            demoPilotForm = new DemoPilot();
+            demoPilotForm.client = this._droneClient;
+            demoPilotForm.Show();
+
+            configValueForm = new ConfigValues();
 
         }
+
+        void _droneClient_NavigationDataAcquired(NavigationData obj)
+        {
+            if(InvokeRequired){
+                
+                Invoke(new Action(() =>{
+                    this.progressBar1.Value = (int)(obj.Battery.Percentage);
+                    if (obj.Battery.Low) {
+                        this.progressBar1.ForeColor = Color.Red;
+                    }
+                    else { 
+                        this.progressBar1.ForeColor = Color.Green;
+                    }
+
+                }
+                    ));
+                }
+
+            if (checkBox1.Checked)
+            {
+                if (lslOut_Altitude != null)
+                    lslOut_Altitude.push_sample(new float[] { obj.Altitude }, obj.Time);
+
+                if (lslOut_Rotation != null) { 
+
+                    var rotationValues = new List<float>();
+                    rotationValues.Add(obj.Pitch);
+                    rotationValues.Add(obj.Roll);
+                    rotationValues.Add(obj.Yaw);
+                    lslOut_Rotation.push_sample(rotationValues.ToArray(), obj.Time);
+                 }
+                
+                if (lslOut_Velocity != null) 
+                {
+                    var velocityValues = new List<float>();
+                    velocityValues.Add(obj.Velocity.X);
+                    velocityValues.Add(obj.Velocity.Y);
+                    velocityValues.Add(obj.Velocity.Z);
+                    lslOut_Velocity.push_sample(velocityValues.ToArray(), obj.Time);
+                }
+
+                if (lslOut_Magneto != null) {
+                    var values = new List<float>();
+                    values.Add(obj.Magneto.Offset.X);
+                    values.Add(obj.Magneto.Offset.Y);
+                    values.Add(obj.Magneto.Offset.Z);
+                    values.Add(obj.Magneto.Rectified.X);
+                    values.Add(obj.Magneto.Rectified.Y);
+                    values.Add(obj.Magneto.Rectified.Z);
+                    lslOut_Magneto.push_sample(values.ToArray(), obj.Time);
+                }
+            
+            }
+        }
+         
 
         private void UnhandledException(object sender, Exception exception)
         {
@@ -114,6 +198,15 @@ namespace AR.Drone.WinApp
         private void btnStart_Click(object sender, EventArgs e)
         {
             _droneClient.Start();
+
+            var tempTimer = new System.Windows.Forms.Timer();
+            tempTimer.Interval = 50;
+            tempTimer.Tick += (s, ae) => {
+                this.btnReadConfig_Click(null, null); 
+                tempTimer.Stop();
+            };
+
+            tempTimer.Start();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -293,6 +386,7 @@ namespace AR.Drone.WinApp
                     }
 
                     _settings = task.Result;
+                    this.configValueForm.UpdateConfigValues(_settings);
                 });
             configurationTask.Start();
         }
@@ -467,6 +561,61 @@ namespace AR.Drone.WinApp
                 CreateAutopilotMission();
                 _autopilot.Active = true;
                 btnAutopilot.ForeColor = Color.Red;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            lslControl.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            pidControl.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.demoPilotForm.Show();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.configValueForm.Show();
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            this.continousControl.Show();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked) { 
+                if (lslOut_Altitude == null) 
+                {
+                    var info = new LSL.liblsl.StreamInfo("ARParrot20_Altitude", "NavData_Altitude",1, 10, LSL.liblsl.channel_format_t.cf_float32, _settings.General.ARDroneName);
+                    lslOut_Altitude = new LSL.liblsl.StreamOutlet(info);
+                }
+
+                if (lslOut_Rotation == null)
+                {
+                    var info = new LSL.liblsl.StreamInfo("ARParrot20_Rotation", "NavData_Rotation", 3, 10, LSL.liblsl.channel_format_t.cf_float32, _settings.General.ARDroneName);
+                    lslOut_Rotation = new LSL.liblsl.StreamOutlet(info);
+                }
+
+                if (lslOut_Velocity == null)
+                {
+                    var info = new LSL.liblsl.StreamInfo("ARParrot20_Velocity", "NavData_Velocity", 3, 10, LSL.liblsl.channel_format_t.cf_float32, _settings.General.ARDroneName);
+                    lslOut_Velocity = new LSL.liblsl.StreamOutlet(info);
+                }
+
+                if (lslOut_Magneto == null)
+                {
+                    var info = new LSL.liblsl.StreamInfo("ARParrot20_Magneto", "NavData_Magneto", 6, 10, LSL.liblsl.channel_format_t.cf_float32, _settings.General.ARDroneName);
+                    lslOut_Magneto = new LSL.liblsl.StreamOutlet(info);
+                }
             }
         }
     }

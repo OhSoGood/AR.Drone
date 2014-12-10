@@ -44,7 +44,8 @@ namespace AR.Drone.Data.Navigation
             navigationData.Video.FrameNumber = navdataBag.video_stream.frame_number;
 
             navigationData.Wifi.LinkQuality = 1.0f - ConversionHelper.ToSingle(navdataBag.wifi.link_quality);
-
+            navigationData.Detected = ConversionHelper.ToInt(navdataBag.vision_detect.tag);
+            
             return navigationData;
         }
 

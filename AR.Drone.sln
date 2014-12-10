@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AR.Drone.WinApp", "AR.Drone
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B8AE2C1-C4ED-4627-A092-B68B70183562}"
 	ProjectSection(SolutionItems) = preProject
+		PhyPA_Notes.txt = PhyPA_Notes.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -23,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AR.Drone.Infrastructure", "AR.Drone.Infrastructure\AR.Drone.Infrastructure.csproj", "{5BE68B3D-1112-464D-8C17-844E834BB3BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AR.Drone.Avionics", "AR.Drone.Avionics\AR.Drone.Avionics.csproj", "{19B1D7B1-C46F-4A87-A674-3350BF372A74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIDLibrary", "PIDLibrary\PIDLibrary.csproj", "{47FF7121-D8B6-4E27-9F9E-402166B67305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +99,13 @@ Global
 		{19B1D7B1-C46F-4A87-A674-3350BF372A74}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19B1D7B1-C46F-4A87-A674-3350BF372A74}.Release|x86.ActiveCfg = Release|x86
 		{19B1D7B1-C46F-4A87-A674-3350BF372A74}.Release|x86.Build.0 = Release|x86
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Debug|x86.ActiveCfg = Debug|x86
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Debug|x86.Build.0 = Debug|x86
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47FF7121-D8B6-4E27-9F9E-402166B67305}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

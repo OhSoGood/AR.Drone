@@ -41,6 +41,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             // 
             this.start.Enabled = false;
             this.start.Location = new System.Drawing.Point(239, 241);
-            this.start.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.start.Margin = new System.Windows.Forms.Padding(2);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(56, 19);
             this.start.TabIndex = 0;
@@ -64,7 +65,7 @@
             // 
             this.stop.Enabled = false;
             this.stop.Location = new System.Drawing.Point(300, 241);
-            this.stop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.stop.Margin = new System.Windows.Forms.Padding(2);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(56, 19);
             this.stop.TabIndex = 1;
@@ -76,7 +77,7 @@
             // 
             this.listStream.FormattingEnabled = true;
             this.listStream.Location = new System.Drawing.Point(16, 10);
-            this.listStream.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listStream.Margin = new System.Windows.Forms.Padding(2);
             this.listStream.Name = "listStream";
             this.listStream.Size = new System.Drawing.Size(159, 225);
             this.listStream.TabIndex = 2;
@@ -85,7 +86,7 @@
             // connect
             // 
             this.connect.Location = new System.Drawing.Point(178, 241);
-            this.connect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.connect.Margin = new System.Windows.Forms.Padding(2);
             this.connect.Name = "connect";
             this.connect.Size = new System.Drawing.Size(56, 19);
             this.connect.TabIndex = 3;
@@ -96,7 +97,7 @@
             // scaleFactor
             // 
             this.scaleFactor.Location = new System.Drawing.Point(190, 30);
-            this.scaleFactor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.scaleFactor.Margin = new System.Windows.Forms.Padding(2);
             this.scaleFactor.Name = "scaleFactor";
             this.scaleFactor.Size = new System.Drawing.Size(92, 20);
             this.scaleFactor.TabIndex = 4;
@@ -111,7 +112,7 @@
             "progressive",
             "absolute"});
             this.flymode.Location = new System.Drawing.Point(190, 64);
-            this.flymode.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flymode.Margin = new System.Windows.Forms.Padding(2);
             this.flymode.Name = "flymode";
             this.flymode.Size = new System.Drawing.Size(92, 21);
             this.flymode.TabIndex = 5;
@@ -164,6 +165,11 @@
             this.textBox2.Size = new System.Drawing.Size(166, 20);
             this.textBox2.TabIndex = 10;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
             // lslControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,7 +186,7 @@
             this.Controls.Add(this.listStream);
             this.Controls.Add(this.stop);
             this.Controls.Add(this.start);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "lslControl";
             this.Text = "lslControl";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
@@ -203,5 +209,6 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

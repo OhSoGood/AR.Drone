@@ -1,0 +1,11 @@
+
+
+TODOs:
+
+[] Add LSL Outlet form streaming navigation data for further data analytics
+[V] Test FFmpeg x86 libs in Debug folder
+[] Add PropertyGrid for Configuration changes and updates
+[] Add DEMO Control with important Commands for the BCI DEMO
+	[] StartUP + Hovering
+	[] Aquiring LSL Data from Online BCI
+	[] Aquiring PID Control Data for course correction

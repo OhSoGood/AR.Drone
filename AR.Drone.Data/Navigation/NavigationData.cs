@@ -15,6 +15,7 @@ namespace AR.Drone.Data.Navigation
         public float Time; // seconds
         public Video Video;
         public Wifi Wifi;
+        public int Detected;
     }
 
     [StructLayout(LayoutKind.Sequential)]

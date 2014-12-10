@@ -19,8 +19,16 @@ namespace AR.Drone.WinApp
         private List<string> listItems = new List<string>();
         private liblsl.StreamInfo[] results;
         private float factor = 10;
+        private float updateRate = 100;
+        public event Action<double> LSLValueAvailable;
+        private void OnLSLValueAvailable(double value) 
+        {
+            if (LSLValueAvailable != null) 
+            {
+                LSLValueAvailable(value);
+            }
+        }
 
-        public event Action<double> PitchValueAvailable;
 
         public lslControl(Drone.Client.DroneClient client)
         {
@@ -62,21 +70,22 @@ namespace AR.Drone.WinApp
             {
                 MessageBox.Show("Please insert correct value for scaling factor.");
             }
-
+             
             flymode.Enabled = false;
             scaleFactor.Enabled = false;
             start.Enabled = false;
             stop.Enabled = true;
             connect.Enabled = false;
-            this.lslTimer.Start();
-
+            //this.lslTimer.Start();
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Console.WriteLine("stop");
             this.client.Hover();
-            this.lslTimer.Stop();
+            //this.lslTimer.Stop();
+            this.backgroundWorker1.CancelAsync();
             connect.Enabled = true;
             start.Enabled = false;
             stop.Enabled = false;
@@ -96,15 +105,18 @@ namespace AR.Drone.WinApp
             
             this.textBox2.Text = currentPitch.ToString();
 
-            if (flymode.SelectedIndex == 0)
-            {
-                client.Progress(FlightMode.Progressive, pitch:currentPitch) ;
+            this.OnLSLValueAvailable(currentPitch);
+
+            // deprecated
+            //if (flymode.SelectedIndex == 0)
+            //{
+            //    client.Progress(FlightMode.Progressive, pitch:currentPitch) ;
                 
-            }
-            else if (flymode.SelectedIndex == 1)
-            {
-                client.Progress(FlightMode.AbsoluteControl, pitch: currentPitch);
-            }
+            //}
+            //else if (flymode.SelectedIndex == 1)
+            //{
+            //    client.Progress(FlightMode.AbsoluteControl, pitch: currentPitch);
+            //}
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,6 +129,8 @@ namespace AR.Drone.WinApp
             // open an inlet and print some interesting info about the stream (meta-data, etc.)
             this.inlet = new liblsl.StreamInlet(this.results[listStream.SelectedIndex]);
             System.Console.Write(inlet.info().as_xml());
+            lslTimer.Interval = (int)inlet.info().nominal_srate();
+
             System.Console.WriteLine("Connected.");
             start.Enabled = true;
         }
@@ -143,6 +157,22 @@ namespace AR.Drone.WinApp
             //if (PitchValueAvailable != null) {
             //    PitchValueAvailable(((float)trackBar1.Value / float.Parse(this.scaleFactor.Text)));
             //}
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        { 
+            while (!backgroundWorker1.CancellationPending) { 
+                this.inlet.pull_sample(this.sample);
+                System.Console.WriteLine(this.sample[0]);
+
+                Invoke(new Action(() => this.textBox1.Text = this.sample[0].ToString()), null);
+
+            //float currentPitch = sample.First() / this.factor;
+
+            //this.textBox2.Text = currentPitch.ToString();
+
+                this.OnLSLValueAvailable(sample.First());
+            }
         }
     }
 }
