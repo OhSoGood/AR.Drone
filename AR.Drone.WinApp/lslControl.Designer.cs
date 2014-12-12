@@ -42,6 +42,11 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox_DiscretControl = new System.Windows.Forms.CheckBox();
+            this.textBox__highThreshold = new System.Windows.Forms.TextBox();
+            this.textBox_lowThreshold = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -169,11 +174,60 @@
             this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // checkBox_DiscretControl
+            // 
+            this.checkBox_DiscretControl.AutoSize = true;
+            this.checkBox_DiscretControl.Location = new System.Drawing.Point(16, 283);
+            this.checkBox_DiscretControl.Name = "checkBox_DiscretControl";
+            this.checkBox_DiscretControl.Size = new System.Drawing.Size(131, 17);
+            this.checkBox_DiscretControl.TabIndex = 14;
+            this.checkBox_DiscretControl.Text = "Enable Discret Control";
+            this.checkBox_DiscretControl.UseVisualStyleBackColor = true;
+            // 
+            // textBox__highThreshold
+            // 
+            this.textBox__highThreshold.Location = new System.Drawing.Point(239, 281);
+            this.textBox__highThreshold.Name = "textBox__highThreshold";
+            this.textBox__highThreshold.Size = new System.Drawing.Size(100, 20);
+            this.textBox__highThreshold.TabIndex = 15;
+            this.textBox__highThreshold.Text = "1,7";
+            // 
+            // textBox_lowThreshold
+            // 
+            this.textBox_lowThreshold.Location = new System.Drawing.Point(239, 316);
+            this.textBox_lowThreshold.Name = "textBox_lowThreshold";
+            this.textBox_lowThreshold.Size = new System.Drawing.Size(100, 20);
+            this.textBox_lowThreshold.TabIndex = 16;
+            this.textBox_lowThreshold.Text = "1,3";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(178, 287);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "High";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(178, 319);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Low";
+            // 
             // lslControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 279);
+            this.ClientSize = new System.Drawing.Size(362, 388);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox_lowThreshold);
+            this.Controls.Add(this.textBox__highThreshold);
+            this.Controls.Add(this.checkBox_DiscretControl);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
@@ -209,5 +263,10 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox_DiscretControl;
+        private System.Windows.Forms.TextBox textBox__highThreshold;
+        private System.Windows.Forms.TextBox textBox_lowThreshold;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

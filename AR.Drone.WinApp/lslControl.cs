@@ -177,15 +177,21 @@ namespace AR.Drone.WinApp
 
                 float plainSample = this.sample.First();
 
-                this.LSLOUTPUT = checkBox1.Checked ? plainSample : plainSample * this.factor; 
+                if (checkBox_DiscretControl.Checked)
+                {
+                    var upperThreshold = float.Parse(textBox__highThreshold.Text);
+                    var lowerThreshold = float.Parse(textBox_lowThreshold.Text);
+
+                    this.LSLOUTPUT = plainSample < lowerThreshold ? -1 : plainSample > upperThreshold ? 1 : 0;
+
+                }
+                else 
+                {
+                    this.LSLOUTPUT = checkBox1.Checked ? plainSample : plainSample * this.factor;
+                }
 
                 Invoke(new Action(() => this.textBox1.Text = this.LSLOUTPUT.ToString()), null);
-
-            //float currentPitch = sample.First() / this.factor;
-
-            //this.textBox2.Text = currentPitch.ToString();
-
-                //this.OnLSLValueAvailable(sample.First());
+                
             }
         }
     }
