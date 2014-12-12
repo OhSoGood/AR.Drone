@@ -182,7 +182,7 @@ namespace AR.Drone.WinApp
                     var upperThreshold = float.Parse(textBox__highThreshold.Text);
                     var lowerThreshold = float.Parse(textBox_lowThreshold.Text);
 
-                    this.LSLOUTPUT = plainSample < lowerThreshold ? -1 : plainSample > upperThreshold ? 1 : 0;
+                    this.LSLOUTPUT = plainSample <= lowerThreshold ? -1 : plainSample >= upperThreshold ? 1 : 0;
 
                 }
                 else 
