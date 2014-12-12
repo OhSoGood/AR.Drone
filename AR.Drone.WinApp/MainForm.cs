@@ -72,7 +72,8 @@ namespace AR.Drone.WinApp
             _videoPacketDecoderWorker.UnhandledException += UnhandledException;
 
             lslControl = new lslControl(_droneClient);
-            
+            lslControl.Show();
+
             pidControl = new PIDForm();
             pidControl.Client = _droneClient;
             
@@ -84,12 +85,15 @@ namespace AR.Drone.WinApp
             pidControl.YawUpdateAvailable += continousControl.UpdateYaw;
             lslControl.LSLValueAvailable += continousControl.UpdatePitch;
 
+            continousControl.lslControl = this.lslControl;
+
             demoPilotForm = new DemoPilot();
             demoPilotForm.client = this._droneClient;
-            demoPilotForm.Show();
+           // demoPilotForm.Show();
 
             configValueForm = new ConfigValues();
-
+            emguCVController = new EmguCVController();
+         //   emguCVController.Show();
         }
 
         void _droneClient_NavigationDataAcquired(NavigationData obj)
@@ -190,9 +194,13 @@ namespace AR.Drone.WinApp
                 _videoPacketDecoderWorker.EnqueuePacket(packet);
         }
 
+        private EmguCVController emguCVController;
+
         private void OnVideoPacketDecoded(VideoFrame frame)
         {
             _frame = frame;
+            
+            emguCVController.EnqueueNewImage(frame);
         }
 
         private void btnStart_Click(object sender, EventArgs e)

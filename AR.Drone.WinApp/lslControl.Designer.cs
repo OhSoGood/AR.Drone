@@ -35,13 +35,13 @@
             this.listStream = new System.Windows.Forms.ListBox();
             this.connect = new System.Windows.Forms.Button();
             this.scaleFactor = new System.Windows.Forms.TextBox();
-            this.flymode = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.StreamLookUp = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,20 +105,6 @@
             this.scaleFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.scaleFactor.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // flymode
-            // 
-            this.flymode.FormattingEnabled = true;
-            this.flymode.Items.AddRange(new object[] {
-            "progressive",
-            "absolute"});
-            this.flymode.Location = new System.Drawing.Point(190, 64);
-            this.flymode.Margin = new System.Windows.Forms.Padding(2);
-            this.flymode.Name = "flymode";
-            this.flymode.Size = new System.Drawing.Size(92, 21);
-            this.flymode.TabIndex = 5;
-            this.flymode.Text = "progressive";
-            this.flymode.SelectedIndexChanged += new System.EventHandler(this.flymode_SelectedIndexChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -170,17 +156,30 @@
             this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(190, 56);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(116, 17);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.Text = "Use plain bci value";
+            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // lslControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(362, 279);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.StreamLookUp);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.flymode);
             this.Controls.Add(this.scaleFactor);
             this.Controls.Add(this.connect);
             this.Controls.Add(this.listStream);
@@ -202,7 +201,6 @@
         private System.Windows.Forms.ListBox listStream;
         private System.Windows.Forms.Button connect;
         private System.Windows.Forms.TextBox scaleFactor;
-        private System.Windows.Forms.ComboBox flymode;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button StreamLookUp;
         public System.Windows.Forms.Button stop;
@@ -210,5 +208,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

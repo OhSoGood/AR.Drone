@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using LSL;
 using AR.Drone.Client.Command;
+using System.Threading;
 
 namespace AR.Drone.WinApp
 {
@@ -20,6 +21,18 @@ namespace AR.Drone.WinApp
         private liblsl.StreamInfo[] results;
         private float factor = 10;
         private float updateRate = 100;
+        public bool connected = false;
+        private float lslOutput = 0.0f;
+
+        public float LSLOUTPUT
+        {
+            get { return lslOutput; }
+            set {
+                Interlocked.Exchange(ref lslOutput, value);
+            }
+        }
+        
+
         public event Action<double> LSLValueAvailable;
         private void OnLSLValueAvailable(double value) 
         {
@@ -71,7 +84,7 @@ namespace AR.Drone.WinApp
                 MessageBox.Show("Please insert correct value for scaling factor.");
             }
              
-            flymode.Enabled = false;
+            
             scaleFactor.Enabled = false;
             start.Enabled = false;
             stop.Enabled = true;
@@ -85,11 +98,12 @@ namespace AR.Drone.WinApp
             Console.WriteLine("stop");
             this.client.Hover();
             //this.lslTimer.Stop();
+            this.LSLOUTPUT = 0;
             this.backgroundWorker1.CancelAsync();
             connect.Enabled = true;
             start.Enabled = false;
             stop.Enabled = false;
-            flymode.Enabled = true;
+            
             scaleFactor.Enabled = true;
         }
 
@@ -97,26 +111,19 @@ namespace AR.Drone.WinApp
         {
             // read samples
             this.inlet.pull_sample(this.sample);
-            System.Console.WriteLine(this.sample[0]);
+
+            System.Console.WriteLine("New Sample " + this.sample[0]);
             
             this.textBox1.Text = this.sample[0].ToString();
 
             float currentPitch = sample.First() / this.factor;
             
             this.textBox2.Text = currentPitch.ToString();
+            
+            this.LSLOUTPUT = currentPitch;
 
             this.OnLSLValueAvailable(currentPitch);
 
-            // deprecated
-            //if (flymode.SelectedIndex == 0)
-            //{
-            //    client.Progress(FlightMode.Progressive, pitch:currentPitch) ;
-                
-            //}
-            //else if (flymode.SelectedIndex == 1)
-            //{
-            //    client.Progress(FlightMode.AbsoluteControl, pitch: currentPitch);
-            //}
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -126,6 +133,7 @@ namespace AR.Drone.WinApp
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            if (listStream.SelectedIndex == -1) return;
             // open an inlet and print some interesting info about the stream (meta-data, etc.)
             this.inlet = new liblsl.StreamInlet(this.results[listStream.SelectedIndex]);
             System.Console.Write(inlet.info().as_xml());
@@ -152,7 +160,9 @@ namespace AR.Drone.WinApp
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            client.Progress(FlightMode.Progressive, pitch: ((float) trackBar1.Value / float.Parse(this.scaleFactor.Text)));
+            //client.Progress(FlightMode.Progressive, pitch: );
+
+            this.LSLOUTPUT = ((float)trackBar1.Value / float.Parse(this.scaleFactor.Text));
 
             //if (PitchValueAvailable != null) {
             //    PitchValueAvailable(((float)trackBar1.Value / float.Parse(this.scaleFactor.Text)));
@@ -162,16 +172,20 @@ namespace AR.Drone.WinApp
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         { 
             while (!backgroundWorker1.CancellationPending) { 
+                
                 this.inlet.pull_sample(this.sample);
-                System.Console.WriteLine(this.sample[0]);
 
-                Invoke(new Action(() => this.textBox1.Text = this.sample[0].ToString()), null);
+                float plainSample = this.sample.First();
+
+                this.LSLOUTPUT = checkBox1.Checked ? plainSample : plainSample * this.factor; 
+
+                Invoke(new Action(() => this.textBox1.Text = this.LSLOUTPUT.ToString()), null);
 
             //float currentPitch = sample.First() / this.factor;
 
             //this.textBox2.Text = currentPitch.ToString();
 
-                this.OnLSLValueAvailable(sample.First());
+                //this.OnLSLValueAvailable(sample.First());
             }
         }
     }
