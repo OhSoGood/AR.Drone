@@ -92,8 +92,7 @@ namespace AR.Drone.WinApp
            // demoPilotForm.Show();
 
             configValueForm = new ConfigValues();
-            emguCVController = new EmguCVController();
-         //   emguCVController.Show();
+        
         }
 
         void _droneClient_NavigationDataAcquired(NavigationData obj)
@@ -194,13 +193,11 @@ namespace AR.Drone.WinApp
                 _videoPacketDecoderWorker.EnqueuePacket(packet);
         }
 
-        private EmguCVController emguCVController;
-
+        
         private void OnVideoPacketDecoded(VideoFrame frame)
         {
             _frame = frame;
             
-            emguCVController.EnqueueNewImage(frame);
         }
 
         private void btnStart_Click(object sender, EventArgs e)

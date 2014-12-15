@@ -53,7 +53,7 @@
             // start
             // 
             this.start.Enabled = false;
-            this.start.Location = new System.Drawing.Point(239, 241);
+            this.start.Location = new System.Drawing.Point(398, 241);
             this.start.Margin = new System.Windows.Forms.Padding(2);
             this.start.Name = "start";
             this.start.Size = new System.Drawing.Size(56, 19);
@@ -69,7 +69,7 @@
             // stop
             // 
             this.stop.Enabled = false;
-            this.stop.Location = new System.Drawing.Point(300, 241);
+            this.stop.Location = new System.Drawing.Point(459, 241);
             this.stop.Margin = new System.Windows.Forms.Padding(2);
             this.stop.Name = "stop";
             this.stop.Size = new System.Drawing.Size(56, 19);
@@ -90,7 +90,7 @@
             // 
             // connect
             // 
-            this.connect.Location = new System.Drawing.Point(178, 241);
+            this.connect.Location = new System.Drawing.Point(337, 241);
             this.connect.Margin = new System.Windows.Forms.Padding(2);
             this.connect.Name = "connect";
             this.connect.Size = new System.Drawing.Size(56, 19);
@@ -101,7 +101,7 @@
             // 
             // scaleFactor
             // 
-            this.scaleFactor.Location = new System.Drawing.Point(190, 30);
+            this.scaleFactor.Location = new System.Drawing.Point(349, 30);
             this.scaleFactor.Margin = new System.Windows.Forms.Padding(2);
             this.scaleFactor.Name = "scaleFactor";
             this.scaleFactor.Size = new System.Drawing.Size(92, 20);
@@ -113,7 +113,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(190, 12);
+            this.label1.Location = new System.Drawing.Point(349, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 6;
@@ -132,7 +132,7 @@
             // trackBar1
             // 
             this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(190, 190);
+            this.trackBar1.Location = new System.Drawing.Point(349, 190);
             this.trackBar1.Maximum = 1;
             this.trackBar1.Minimum = -1;
             this.trackBar1.Name = "trackBar1";
@@ -142,7 +142,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(190, 114);
+            this.textBox1.Location = new System.Drawing.Point(349, 114);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(166, 20);
@@ -150,7 +150,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(190, 151);
+            this.textBox2.Location = new System.Drawing.Point(349, 151);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(166, 20);
@@ -166,7 +166,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(190, 56);
+            this.checkBox1.Location = new System.Drawing.Point(349, 56);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(116, 17);
             this.checkBox1.TabIndex = 11;
@@ -222,7 +222,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 388);
+            this.ClientSize = new System.Drawing.Size(525, 388);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_lowThreshold);

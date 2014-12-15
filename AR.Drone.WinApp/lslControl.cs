@@ -34,6 +34,7 @@ namespace AR.Drone.WinApp
         
 
         public event Action<double> LSLValueAvailable;
+        private float lastBCIValue;
         private void OnLSLValueAvailable(double value) 
         {
             if (LSLValueAvailable != null) 
@@ -181,9 +182,10 @@ namespace AR.Drone.WinApp
                 {
                     var upperThreshold = float.Parse(textBox__highThreshold.Text);
                     var lowerThreshold = float.Parse(textBox_lowThreshold.Text);
-
+                    
                     this.LSLOUTPUT = plainSample <= lowerThreshold ? -1 : plainSample >= upperThreshold ? 1 : 0;
-
+                    // Accumulate the difference if between or? above the thresholds?
+                    this.lastBCIValue = this.LSLOUTPUT;
                 }
                 else 
                 {
