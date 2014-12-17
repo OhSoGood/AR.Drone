@@ -81,6 +81,10 @@
     <Compile Include="addons\BasicProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="addons\FloatProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="addons\FloatValueEventArgs.cs" />
     <Compile Include="ConfigValues.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +123,11 @@
     <Compile Include="PlayerForm.Designer.cs">
       <DependentUpon>PlayerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="VideoHelper.cs" />
     <Compile Include="TreeViewHelper.cs" />
     <Compile Include="MainForm.cs">
@@ -150,6 +159,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerForm.resx">
       <DependentUpon>PlayerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

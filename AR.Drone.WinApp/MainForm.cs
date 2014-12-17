@@ -77,8 +77,8 @@ namespace AR.Drone.WinApp
             pidControl = new PIDForm();
             pidControl.Client = _droneClient;
             
-            _droneClient.NavigationDataAcquired += this.pidControl.UpdateNavDataFromDrone;
-            _droneClient.NavigationDataAcquired += _droneClient_NavigationDataAcquired;
+            //_droneClient.NavigationDataAcquired += this.pidControl.UpdateNavDataFromDrone;
+            _droneClient.NavigationDataAcquired += _droneClient_NavigationDataAcquired; 
 
             continousControl = new ContinousControl();
             continousControl.Client = _droneClient;
@@ -97,6 +97,8 @@ namespace AR.Drone.WinApp
 
         void _droneClient_NavigationDataAcquired(NavigationData obj)
         {
+            this.continousControl.UpdateYaw(obj.Yaw);
+            
             if(InvokeRequired){
                 
                 Invoke(new Action(() =>{
