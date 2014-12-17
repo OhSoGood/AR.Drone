@@ -77,9 +77,9 @@ namespace AR.Drone.WinApp
         public lslControl(Drone.Client.DroneClient client)
         {
             InitializeComponent();
-            // wait until an EEG stream shows up
-
+            // wait until an EEG stream shows up 
             this.updateStreamList();
+
             this.client = client;
             
         }
@@ -107,6 +107,7 @@ namespace AR.Drone.WinApp
             start.Enabled = false;
             stop.Enabled = true;
             connect.Enabled = false;
+            // A simplified background thread!
             backgroundWorker_lslListener.RunWorkerAsync();
         }
 
@@ -154,8 +155,8 @@ namespace AR.Drone.WinApp
 
                 float plainSample = this.sample.First();
 
-                
                 float modSample = 0f;
+                
                 // Income value modification
 
                 if (groupBox1.Enabled)
@@ -183,7 +184,7 @@ namespace AR.Drone.WinApp
                     this.LSLOUTPUT = checkBox1.Checked ? plainSample : plainSample * this.factor;
                 }
 
-
+                
                 // don't be scared... its a anonymous function (Lambda expression) submittet to the GUI Thread
                 Invoke(
                     new Action(

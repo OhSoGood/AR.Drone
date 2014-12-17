@@ -52,6 +52,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.basicProgressBar1 = new ProgressBars.Basic.BasicProgressBar();
             this.basicProgressBar_Input = new ProgressBars.Basic.BasicProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(663, 79);
+            this.textBox1.Location = new System.Drawing.Point(521, 208);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(75, 26);
@@ -132,7 +133,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(474, 84);
+            this.textBox2.Location = new System.Drawing.Point(465, 12);
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(131, 20);
@@ -160,7 +161,7 @@
             // checkBox_DiscretControl
             // 
             this.checkBox_DiscretControl.AutoSize = true;
-            this.checkBox_DiscretControl.Location = new System.Drawing.Point(474, 146);
+            this.checkBox_DiscretControl.Location = new System.Drawing.Point(465, 74);
             this.checkBox_DiscretControl.Name = "checkBox_DiscretControl";
             this.checkBox_DiscretControl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.checkBox_DiscretControl.Size = new System.Drawing.Size(131, 17);
@@ -170,7 +171,7 @@
             // 
             // textBox__highThreshold
             // 
-            this.textBox__highThreshold.Location = new System.Drawing.Point(505, 170);
+            this.textBox__highThreshold.Location = new System.Drawing.Point(496, 98);
             this.textBox__highThreshold.Name = "textBox__highThreshold";
             this.textBox__highThreshold.Size = new System.Drawing.Size(100, 20);
             this.textBox__highThreshold.TabIndex = 15;
@@ -178,7 +179,7 @@
             // 
             // textBox_lowThreshold
             // 
-            this.textBox_lowThreshold.Location = new System.Drawing.Point(505, 207);
+            this.textBox_lowThreshold.Location = new System.Drawing.Point(496, 135);
             this.textBox_lowThreshold.Name = "textBox_lowThreshold";
             this.textBox_lowThreshold.Size = new System.Drawing.Size(100, 20);
             this.textBox_lowThreshold.TabIndex = 16;
@@ -187,7 +188,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(472, 176);
+            this.label2.Location = new System.Drawing.Point(463, 104);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 17;
@@ -196,7 +197,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(472, 210);
+            this.label3.Location = new System.Drawing.Point(463, 138);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(27, 13);
             this.label3.TabIndex = 18;
@@ -216,7 +217,7 @@
             // checkBox_Percentage
             // 
             this.checkBox_Percentage.AutoSize = true;
-            this.checkBox_Percentage.Location = new System.Drawing.Point(475, 110);
+            this.checkBox_Percentage.Location = new System.Drawing.Point(466, 38);
             this.checkBox_Percentage.Name = "checkBox_Percentage";
             this.checkBox_Percentage.Size = new System.Drawing.Size(153, 17);
             this.checkBox_Percentage.TabIndex = 21;
@@ -302,11 +303,21 @@
             this.basicProgressBar_Input.Text = "basicProgressBar1";
             this.basicProgressBar_Input.DoubleClick += new System.EventHandler(this.basicProgressBar_Input_DoubleClick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(518, 192);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "LSL Output ";
+            // 
             // lslControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 388);
+            this.ClientSize = new System.Drawing.Size(623, 299);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.basicProgressBar1);
@@ -359,8 +370,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox_OffsetTextbox;
         private System.Windows.Forms.CheckBox checkBox3;
-        private ProgressBars.Basic.BasicProgressBar basicProgressBar1;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
+        private ProgressBars.Basic.BasicProgressBar basicProgressBar1;
+        private System.Windows.Forms.Label label1;
     }
 }

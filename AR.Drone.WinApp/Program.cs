@@ -17,7 +17,8 @@ namespace AR.Drone.WinApp
                 case PlatformID.Win32NT:
                 case PlatformID.Win32S:
                 case PlatformID.Win32Windows:
-                   // string ffmpegPath = string.Format(@"../../../FFmpeg.AutoGen/FFmpeg/bin/windows/{0}", Environment.Is64BitProcess ? "x64" : "x86");
+                    // IMPORTANT - copy the ffmpeg binaries into the execution folder 
+                    // string ffmpegPath = string.Format(@"../../../FFmpeg.AutoGen/FFmpeg/bin/windows/{0}", Environment.Is64BitProcess ? "x64" : "x86");
                     InteropHelper.RegisterLibrariesSearchPath(Environment.CurrentDirectory);
                     break;
                 case PlatformID.Unix:

@@ -26,7 +26,7 @@ namespace AR.Drone.WinApp
         private const string ARDroneTrackFileExt = ".ardrone";
         private const string ARDroneTrackFilesFilter = "AR.Drone track files (*.ardrone)|*.ardrone";
 
-        private readonly DroneClient _droneClient;
+        public readonly DroneClient _droneClient;
         private readonly List<PlayerForm> _playerForms;
         private readonly VideoPacketDecoderWorker _videoPacketDecoderWorker;
         private Settings _settings;
@@ -46,6 +46,8 @@ namespace AR.Drone.WinApp
         private PIDForm pidControl;
         private ContinousControl continousControl;
 
+
+        // quick and dirty approach to bring data out for further analysis...
         private LSL.liblsl.StreamOutlet lslOut_Velocity;
         private LSL.liblsl.StreamOutlet lslOut_Altitude;
         private LSL.liblsl.StreamOutlet lslOut_Magneto;
@@ -76,43 +78,46 @@ namespace AR.Drone.WinApp
 
             pidControl = new PIDForm();
             pidControl.Client = _droneClient;
-            
-            //_droneClient.NavigationDataAcquired += this.pidControl.UpdateNavDataFromDrone;
-            _droneClient.NavigationDataAcquired += _droneClient_NavigationDataAcquired; 
 
             continousControl = new ContinousControl();
             continousControl.Client = _droneClient;
-            pidControl.YawUpdateAvailable += continousControl.UpdateYaw;
-            lslControl.LSLValueAvailable += continousControl.UpdatePitch;
+
+
+            _droneClient.NavigationDataAcquired += _droneClient_NavigationDataAcquired;
+            _droneClient.NavigationDataAcquired += this.pidControl.UpdateNavDataFromDrone;
+            _droneClient.NavigationDataAcquired += this.continousControl.UpdateOnNavDataUpdate;
 
             continousControl.lslControl = this.lslControl;
+            continousControl.pidControl = pidControl;
 
+            // a form intented to be used for the demo... should contain the complete Workflow hardcoded
             demoPilotForm = new DemoPilot();
             demoPilotForm.client = this._droneClient;
            // demoPilotForm.Show();
 
+            // use this to view and update dron values
             configValueForm = new ConfigValues();
-        
         }
 
         void _droneClient_NavigationDataAcquired(NavigationData obj)
         {
-            this.continousControl.UpdateYaw(obj.Yaw);
-            
             if(InvokeRequired){
                 
                 Invoke(new Action(() =>{
                     this.progressBar1.Value = (int)(obj.Battery.Percentage);
-                    if (obj.Battery.Low) {
+                    if (obj.Battery.Low)
+                    {
                         this.progressBar1.ForeColor = Color.Red;
                     }
-                    else { 
+                    else
+                    {
                         this.progressBar1.ForeColor = Color.Green;
                     }
-
                 }
                     ));
-                }
+            }
+
+            #region LSL Output
 
             if (checkBox1.Checked)
             {
@@ -147,8 +152,10 @@ namespace AR.Drone.WinApp
                     values.Add(obj.Magneto.Rectified.Z);
                     lslOut_Magneto.push_sample(values.ToArray(), obj.Time);
                 }
-            
+
             }
+
+            #endregion
         }
          
 
@@ -316,6 +323,13 @@ namespace AR.Drone.WinApp
         private void button3_Click(object sender, EventArgs e)
         {
             _droneClient.Land();
+
+            while (!_droneClient._commandSender._commandQueue.IsEmpty) 
+            {
+                AtCommand result = null;
+                _droneClient._commandSender._commandQueue.TryDequeue(out result);
+            }
+
             this.lslControl.stop.PerformClick();
         }
 
