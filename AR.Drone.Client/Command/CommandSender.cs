@@ -14,7 +14,7 @@ namespace AR.Drone.Client.Command
         public const int CommandPort = 5556;
         public const int KeepAliveTimeout = 20;
 
-        private readonly ConcurrentQueue<AtCommand> _commandQueue;
+        public readonly ConcurrentQueue<AtCommand> _commandQueue;
         private readonly NetworkConfiguration _configuration;
 
         public CommandSender(NetworkConfiguration configuration, ConcurrentQueue<AtCommand> commandQueue)

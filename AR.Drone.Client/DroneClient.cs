@@ -23,7 +23,7 @@ namespace AR.Drone.Client
         private NavigationData _navigationData;
         private StateRequest _stateRequest;
 
-        private readonly CommandSender _commandSender;
+        public readonly CommandSender _commandSender;
         private readonly NetworkConfiguration _networkConfiguration;
         private readonly NavdataAcquisition _navdataAcquisition;
         private readonly VideoAcquisition _videoAcquisition;
