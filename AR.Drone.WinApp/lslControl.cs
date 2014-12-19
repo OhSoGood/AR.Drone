@@ -152,9 +152,9 @@ namespace AR.Drone.WinApp
             while (!backgroundWorker_lslListener.CancellationPending) { 
                 
                 this.inlet.pull_sample(this.sample);
-
+                
                 float plainSample = this.sample.First();
-
+                
                 float modSample = 0f;
                 
                 // Income value modification
@@ -184,7 +184,7 @@ namespace AR.Drone.WinApp
                     this.LSLOUTPUT = checkBox1.Checked ? plainSample : plainSample * this.factor;
                 }
 
-                
+                Console.WriteLine(LSLOUTPUT);
                 // don't be scared... its a anonymous function (Lambda expression) submittet to the GUI Thread
                 Invoke(
                     new Action(

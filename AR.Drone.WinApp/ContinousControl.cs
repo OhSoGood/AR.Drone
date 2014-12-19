@@ -100,8 +100,8 @@ namespace AR.Drone.WinApp
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            UpdateYawCorrection();
-
+            //UpdateYawCorrection();
+            //bool first = true;
             if (lslControl != null) {                 
 
                 if (radioButton1.Checked)
@@ -122,7 +122,7 @@ namespace AR.Drone.WinApp
             this.label_RollCommand.Text = this.currentRoll.ToString();
             this.label_YawCommand.Text = this.currentYaw.ToString();
             this.label_GazCommand.Text = this.currentGaz.ToString();
-
+            Console.WriteLine("CurrentRoll " + currentRoll);
             UpdateDroneControl();
         }
 
@@ -131,13 +131,13 @@ namespace AR.Drone.WinApp
             if (!this.checkBox2.Checked)
             {
 
-                if (this.IncomingYaw > 0)
+                if (this.IncomingYaw > 2.01f)
                 {
-                    this.currentYaw = 1;
+                    this.currentYaw = 0.5f;
                 }
-                else if (this.IncomingYaw < 0)
+                else if (this.IncomingYaw < 1.99f)
                 {
-                    this.currentYaw = -1;
+                    this.currentYaw = -0.5f;
                 }
                 else
                 {
